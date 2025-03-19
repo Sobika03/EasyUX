@@ -1,0 +1,102 @@
+<style>
+  /* Basic styling for the 3D Cube Carousel */
+  .carousel-container {
+    perspective: 1000px;
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    position: relative;
+    height: 250px;
+  }
+
+  .carousel {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 1s ease-in-out;
+  }
+
+  .carousel-item {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    backface-visibility: hidden;
+    transform-origin: center;
+  }
+
+  /* Position each slide as a cube face */
+  .carousel-item:nth-child(1) { transform: rotateY(0deg) translateZ(200px); }
+  .carousel-item:nth-child(2) { transform: rotateY(90deg) translateZ(200px); }
+  .carousel-item:nth-child(3) { transform: rotateY(180deg) translateZ(200px); }
+  .carousel-item:nth-child(4) { transform: rotateY(270deg) translateZ(200px); }
+
+  .carousel-controls {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+  }
+
+  .carousel-controls button {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 18px;
+    outline: none;
+  }
+
+  .carousel-controls button:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+</style>
+
+<component>
+  <div class="carousel-container">
+    <div class="carousel" id="carousel">
+      <div class="carousel-item" style="background-image: url('https://placehold.co/400x250/FF5733/FFF');"></div>
+      <div class="carousel-item" style="background-image: url('https://placehold.co/400x250/33FF57/FFF');"></div>
+      <div class="carousel-item" style="background-image: url('https://placehold.co/400x250/3357FF/FFF');"></div>
+      <div class="carousel-item" style="background-image: url('https://placehold.co/400x250/FF33A8/FFF');"></div>
+    </div>
+    <div class="carousel-controls">
+      <button id="prevBtn">&#10094;</button>
+      <button id="nextBtn">&#10095;</button>
+    </div>
+  </div>
+</component>
+
+<script>
+  let currentIndex = 0;
+  const totalSlides = document.querySelectorAll('.carousel-item').length;
+  const carousel = document.getElementById('carousel');
+
+  function updateCarousel() {
+    const angle = currentIndex * -90; // Rotate 90° per slide
+    carousel.style.transform = `rotateY(${angle}deg)`;
+  }
+
+  document.getElementById('nextBtn').addEventListener('click', () => {
+    currentIndex = (currentIndex + 1) % totalSlides;
+    updateCarousel();
+  });
+
+  document.getElementById('prevBtn').addEventListener('click', () => {
+    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+    updateCarousel();
+  });
+
+  // Auto-play every 4 seconds
+  setInterval(() => {
+    currentIndex = (currentIndex + 1) % totalSlides;
+    updateCarousel();
+  }, 4000);
+</script>

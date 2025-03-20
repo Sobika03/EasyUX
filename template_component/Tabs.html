@@ -1,0 +1,192 @@
+<style>
+    /* General Reset */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* Panel Styling */
+    .panel {
+        padding: 20px;
+        background-color: #f9fafb; /* Light gray background */
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        width: 600px; /* Fixed width for the panel */
+        max-width: 100%; /* Ensure responsiveness */
+        font-family: Arial, sans-serif;
+    }
+
+    /* Heading Styling */
+    .panel h5 {
+        font-size: 1.2rem; /* Equivalent to text-lg */
+        font-weight: 600; /* Equivalent to font-semibold */
+        color: #333; /* Dark text color */
+        margin-bottom: 20px; /* Equivalent to mb-5 */
+    }
+
+    /* Tab Navigation Styling */
+    .tab-nav {
+        display: flex;
+        flex-wrap: wrap;
+        border-bottom: 1px solid #ddd; /* Light gray border */
+        margin-top: 15px; /* Equivalent to mt-3 */
+    }
+
+    .tab-nav li {
+        list-style: none;
+    }
+
+    .tab-nav a {
+        display: block;
+        padding: 10px 15px; /* Equivalent to p-3.5 py-2 */
+        text-decoration: none;
+        color: #666; /* Default text color */
+        border: 1px solid transparent; /* Transparent border */
+        transition: all 0.3s ease;
+    }
+
+    .tab-nav a:hover {
+        color: #007bff; /* Primary blue on hover */
+        border-bottom-color: #007bff; /* Highlight bottom border */
+    }
+
+    .tab-nav a.active {
+        color: #007bff; /* Active tab text color */
+        border-color: #ddd; /* Match border color */
+        border-bottom-color: transparent; /* Remove bottom border */
+    }
+
+    .tab-nav a.disabled {
+        pointer-events: none; /* Disable click */
+        color: #ccc; /* Light gray for disabled state */
+    }
+
+    /* Tab Content Styling */
+    .tab-content {
+        padding-top: 20px; /* Equivalent to pt-5 */
+        font-size: 14px; /* Equivalent to text-sm */
+    }
+
+    .tab-content h4 {
+        font-size: 1.5rem; /* Equivalent to text-2xl */
+        font-weight: 600; /* Equivalent to font-semibold */
+        margin-bottom: 15px; /* Equivalent to mb-4 */
+    }
+
+    .tab-content p {
+        margin-bottom: 15px; /* Equivalent to mb-4 */
+        line-height: 1.6;
+    }
+
+    /* Profile Image Styling */
+    .profile-image {
+        width: 80px; /* Equivalent to w-20 */
+        height: 80px; /* Equivalent to h-20 */
+        border-radius: 50%; /* Circular image */
+        object-fit: cover; /* Ensure proper scaling */
+        border: 2px solid #ebedf2; /* Light gray border */
+    }
+
+    /* Media Object Styling */
+    .media-object {
+        display: flex;
+        align-items: flex-start; /* Align items to the top */
+    }
+
+    .media-object .content {
+        margin-left: 15px; /* Equivalent to ltr:mr-4 */
+    }
+
+    .media-object h5 {
+        font-size: 1.25rem; /* Equivalent to text-xl */
+        font-weight: 500; /* Equivalent to font-medium */
+        margin-bottom: 15px; /* Equivalent to mb-4 */
+    }
+</style>
+
+<component>
+    <div class="panel">
+        <!-- Heading -->
+        <div>
+            <h5>Simple Tabs</h5>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div x-data="{ tab: 'home' }">
+            <ul class="tab-nav">
+                <li>
+                    <a href="#" class="active" @click="tab = 'home'" :class="{'active': tab === 'home'}">Home</a>
+                </li>
+                <li>
+                    <a href="#" @click="tab = 'profile'" :class="{'active': tab === 'profile'}">Profile</a>
+                </li>
+                <li>
+                    <a href="#" @click="tab = 'contact'" :class="{'active': tab === 'contact'}">Contact</a>
+                </li>
+                <li>
+                    <a href="#" class="disabled">Disabled</a>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content">
+                <template x-if="tab === 'home'">
+                    <div>
+                        <h4>We move your world!</h4>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                            ex ea commodo consequat.
+                        </p>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                            ex ea commodo consequat.
+                        </p>
+                    </div>
+                </template>
+
+                <template x-if="tab === 'profile'">
+                    <div class="media-object">
+                        <img src="assets/images/profile-34.jpeg" alt="Profile Image" class="profile-image">
+                        <div class="content">
+                            <h5>Media heading</h5>
+                            <p>
+                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras
+                                purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi
+                                vulputate fringilla. Donec lacinia congue felis in faucibus.
+                            </p>
+                        </div>
+                    </div>
+                </template>
+
+                <template x-if="tab === 'contact'">
+                    <div>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                            ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                            fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                            deserunt mollit anim id est laborum.
+                        </p>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</component>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<script>
+    // Script for interactivity
+    document.addEventListener("DOMContentLoaded", function () {
+        const tabs = document.querySelectorAll(".tab-nav a");
+
+        tabs.forEach(tab => {
+            tab.addEventListener("click", function () {
+                tabs.forEach(t => t.classList.remove("active"));
+                tab.classList.add("active");
+            });
+        });
+    });    
+</script>

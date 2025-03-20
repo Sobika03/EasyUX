@@ -1,0 +1,62 @@
+<style>
+    /* General Reset */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* Button Styling */
+    .btn {
+        padding: 10px 20px;
+        font-size: 1rem;
+        font-weight: 500;
+        color: #fff;
+        background-color: #007bff; /* Primary blue color */
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+
+    /* Flexbox Utility Classes */
+    .flex {
+        display: flex;
+    }
+
+    .items-center {
+        align-items: center;
+        padding: 20px;
+    }
+
+    .mb-5 {
+        margin-bottom: 20px; /* Equivalent to mb-5 */
+    }
+</style>
+
+<component>
+    <div>     
+        <!-- Button Container -->
+        <div class="mb-5">
+            <div class="flex items-center">
+                <button type="button" class="btn" onclick="showAlert()">Basic message</button>
+            </div>
+        </div>
+    </div>
+</component>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    // Function to show SweetAlert2 popup
+    function showAlert() {
+        Swal.fire({
+            title: 'Saved successfully',
+            padding: '2em',
+            icon: 'success', // Optional: Add a success icon
+        });
+    }
+</script>

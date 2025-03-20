@@ -1,79 +1,79 @@
 <style>
-    /* Counter Container */
-    .counter-container {
-      text-align: center;
-      margin: 50px auto;
-      padding: 30px;
-      max-width: 350px;
-      background: linear-gradient(135deg, #f7f7f7, #e0e0e0);
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
-  
-    /* Counter Title */
-    .counter-title {
-      font-size: 26px;
-      font-weight: bold;
-      margin-bottom: 20px;
-      color: #333;
-    }
-  
-    /* Counter Display */
-    .counter-display {
-      font-size: 50px;
-      font-weight: bold;
-      color: #007bff;
-      margin-bottom: 20px;
-      transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
-    }
-  
-    /* Buttons */
+  /* Counter Container */
+  .counter-container {
+    text-align: center;
+    margin: 50px auto;
+    padding: 30px;
+    max-width: 350px;
+    background: linear-gradient(135deg, #f7f7f7, #e0e0e0);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Counter Title */
+  .counter-title {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  /* Counter Display */
+  .counter-display {
+    font-size: 50px;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+  }
+
+  /* Buttons */
+  .counter-button {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 8px;
+    margin: 5px;
+    transition: background 0.3s ease, transform 0.2s ease-in-out;
+    font-weight: bold;
+  }
+
+  /* Hover Effect */
+  .counter-button:hover {
+    background: linear-gradient(135deg, #0056b3, #004494);
+    transform: scale(1.05);
+  }
+
+  /* Disabled Button */
+  .counter-button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 600px) {
     .counter-button {
-      background: linear-gradient(135deg, #007bff, #0056b3);
-      color: white;
-      border: none;
-      padding: 12px 25px;
-      font-size: 18px;
-      cursor: pointer;
-      border-radius: 8px;
-      margin: 5px;
-      transition: background 0.3s ease, transform 0.2s ease-in-out;
-      font-weight: bold;
+      padding: 10px 20px;
+      font-size: 16px;
     }
-  
-    /* Hover Effect */
-    .counter-button:hover {
-      background: linear-gradient(135deg, #0056b3, #004494);
-      transform: scale(1.05);
-    }
-  
-    /* Disabled Button */
-    .counter-button:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-      transform: none;
-    }
-  
-    /* Responsive Design */
-    @media (max-width: 600px) {
-      .counter-button {
-        padding: 10px 20px;
-        font-size: 16px;
-      }
-    }
+  }
 </style>
-  
+
 <component>
-<!-- Counter Component -->
-<div class="counter-container">
+  <!-- Counter Component -->
+  <div class="counter-container">
     <div class="counter-title">Counter</div>
     <div class="counter-display" id="counter-value">0</div>
     <div>
-    <button class="counter-button" onclick="increment()">+</button>
-    <button class="counter-button" onclick="decrement()">−</button>
-    <button class="counter-button" onclick="resetCounter()">Reset</button>
+      <button class="counter-button" onclick="increment()">+</button>
+      <button class="counter-button" onclick="decrement()">−</button>
+      <button class="counter-button" onclick="resetCounter()">Reset</button>
     </div>
-</div>
+  </div>
 </component>
 
 <script>
@@ -82,33 +82,33 @@ let counter = 0;
 
 // Function to increment the counter
 function increment() {
-    counter++;
-    updateCounterDisplay();
+  counter++;
+  updateCounterDisplay();
 }
 
 // Function to decrement the counter (with optional zero limit)
 function decrement() {
-    if (counter > 0) {
+  if (counter > 0) {
     counter--;
     updateCounterDisplay();
-    }
+  }
 }
 
 // Function to reset counter
 function resetCounter() {
-    counter = 0;
-    updateCounterDisplay();
+  counter = 0;
+  updateCounterDisplay();
 }
 
 // Function to update the counter display with animation
 function updateCounterDisplay() {
-    const counterDisplay = document.getElementById("counter-value");
-    counterDisplay.textContent = counter;
-    counterDisplay.style.transform = "scale(1.2)";
-    counterDisplay.style.color = counter > 0 ? "#007bff" : "#ff4d4d"; // Changes color dynamically
+  const counterDisplay = document.getElementById("counter-value");
+  counterDisplay.textContent = counter;
+  counterDisplay.style.transform = "scale(1.2)";
+  counterDisplay.style.color = counter > 0 ? "#007bff" : "#ff4d4d"; // Changes color dynamically
 
-    setTimeout(() => {
+  setTimeout(() => {
     counterDisplay.style.transform = "scale(1)";
-    }, 200);
+  }, 200);
 }
 </script>

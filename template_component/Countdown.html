@@ -1,144 +1,144 @@
 <style>
-    /* Countdown Container */
-    .countdown-container {
-      text-align: center;
-      margin: 50px auto;
-      padding: 20px;
-      max-width: 800px;
-      background: linear-gradient(135deg, #f7f7f7, #e0e0e0);
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
-  
-    /* Countdown Title */
-    .countdown-title {
-      font-size: 26px;
-      font-weight: bold;
-      margin-bottom: 20px;
-      color: #333;
-    }
-  
-    /* Countdown Grid */
-    .countdown-time {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-  
-    /* Countdown Units */
-    .time-unit {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-  
+  /* Countdown Container */
+  .countdown-container {
+    text-align: center;
+    margin: 50px auto;
+    padding: 20px;
+    max-width: 800px;
+    background: linear-gradient(135deg, #f7f7f7, #e0e0e0);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Countdown Title */
+  .countdown-title {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  /* Countdown Grid */
+  .countdown-time {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  /* Countdown Units */
+  .time-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .time-number {
+    width: 90px;
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    font-weight: bold;
+    color: #fff;
+    background: linear-gradient(135deg, #007bff, #0056b3);
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .time-label {
+    font-size: 14px;
+    color: #444;
+    text-transform: uppercase;
+    margin-top: 8px;
+    font-weight: 600;
+  }
+
+  /* Animation for changing numbers */
+  .time-number.change {
+    transform: scale(1.1);
+  }
+
+  /* Responsive Design */
+  @media (max-width: 600px) {
     .time-number {
-      width: 90px;
-      height: 90px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 32px;
-      font-weight: bold;
-      color: #fff;
-      background: linear-gradient(135deg, #007bff, #0056b3);
-      border-radius: 50%;
-      box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
-      transition: transform 0.3s ease-in-out;
+      width: 70px;
+      height: 70px;
+      font-size: 24px;
     }
-  
+
     .time-label {
-      font-size: 14px;
-      color: #444;
-      text-transform: uppercase;
-      margin-top: 8px;
-      font-weight: 600;
+      font-size: 12px;
     }
-  
-    /* Animation for changing numbers */
-    .time-number.change {
-      transform: scale(1.1);
-    }
-  
-    /* Responsive Design */
-    @media (max-width: 600px) {
-      .time-number {
-        width: 70px;
-        height: 70px;
-        font-size: 24px;
-      }
-  
-      .time-label {
-        font-size: 12px;
-      }
-    }
+  }
 </style>
-  
+
 <component>
-<!-- Countdown Component -->
-<div class="countdown-container">
+  <!-- Countdown Component -->
+  <div class="countdown-container">
     <div class="countdown-title">Countdown to Event</div>
     <div class="countdown-time">
-    <div class="time-unit">
+      <div class="time-unit">
         <div class="time-number" id="days">00</div>
         <div class="time-label">Days</div>
-    </div>
-    <div class="time-unit">
+      </div>
+      <div class="time-unit">
         <div class="time-number" id="hours">00</div>
         <div class="time-label">Hours</div>
-    </div>
-    <div class="time-unit">
+      </div>
+      <div class="time-unit">
         <div class="time-number" id="minutes">00</div>
         <div class="time-label">Minutes</div>
-    </div>
-    <div class="time-unit">
+      </div>
+      <div class="time-unit">
         <div class="time-number" id="seconds">00</div>
         <div class="time-label">Seconds</div>
+      </div>
     </div>
-    </div>
-</div>
+  </div>
 </component>
-  
+
 <script>
 // Set the target date (YYYY-MM-DD HH:MM:SS)
 const targetDate = new Date("2025-12-31 23:59:59").getTime();
 
 // Function to update the countdown
 function updateCountdown() {
-    const now = new Date().getTime();
-    const timeRemaining = targetDate - now;
+  const now = new Date().getTime();
+  const timeRemaining = targetDate - now;
 
-    // Calculate days, hours, minutes, and seconds
-    const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+  // Calculate days, hours, minutes, and seconds
+  const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
-    // Function to update number with animation
-    function updateElement(id, value) {
+  // Function to update number with animation
+  function updateElement(id, value) {
     const element = document.getElementById(id);
     if (element.textContent !== value) {
-        element.classList.add("change");
-        setTimeout(() => element.classList.remove("change"), 300);
+      element.classList.add("change");
+      setTimeout(() => element.classList.remove("change"), 300);
     }
     element.textContent = value;
-    }
+  }
 
-    // Update the numbers with animation
-    updateElement("days", String(days).padStart(2, "0"));
-    updateElement("hours", String(hours).padStart(2, "0"));
-    updateElement("minutes", String(minutes).padStart(2, "0"));
-    updateElement("seconds", String(seconds).padStart(2, "0"));
+  // Update the numbers with animation
+  updateElement("days", String(days).padStart(2, "0"));
+  updateElement("hours", String(hours).padStart(2, "0"));
+  updateElement("minutes", String(minutes).padStart(2, "0"));
+  updateElement("seconds", String(seconds).padStart(2, "0"));
 
-    // Stop the countdown when the target time is reached
-    if (timeRemaining < 0) {
+  // Stop the countdown when the target time is reached
+  if (timeRemaining < 0) {
     clearInterval(countdownInterval);
     updateElement("days", "00");
     updateElement("hours", "00");
     updateElement("minutes", "00");
     updateElement("seconds", "00");
-    }
+  }
 }
 
 // Update the countdown every second

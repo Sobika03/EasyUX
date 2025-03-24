@@ -1,0 +1,144 @@
+<style>
+  .list-group {
+    width: 100%;
+    max-width: 400px;
+    margin: 20px auto;
+    border: 1px solid #e0e6ed;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: white;
+  }
+
+  .list-group-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 15px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #333;
+    background-color: #fff;
+    border-bottom: 1px solid #e0e6ed;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .list-group-item:last-child {
+    border-bottom: none;
+  }
+
+  .list-group-item:hover {
+    background-color: #f7f7f7;
+    color: #007bff;
+    transform: scale(1.02);
+  }
+
+  .list-group-item.active {
+    background-color: #007bff;
+    color: white;
+    box-shadow: 0 1px 10px rgba(67, 97, 238, 0.2);
+  }
+
+  .icon {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+  }
+
+  .text-container {
+    flex: 1;
+  }
+
+  h6 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  p {
+    margin: 0;
+    font-size: 12px;
+    color: #666;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 480px) {
+    .list-group {
+      max-width: 100%;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    .list-group-item {
+      padding: 12px;
+      font-size: 14px;
+    }
+
+    h6 {
+      font-size: 14px;
+    }
+
+    p {
+      font-size: 11px;
+    }
+  }
+</style>
+
+<component>
+  <div class="list-group" role="list">
+    <!-- List Item 1: Bell Icon -->
+    <div class="list-group-item" onclick="selectItem(this)" role="listitem">
+      <div class="icon text-primary">
+        <!-- Bell Icon SVG -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8c0-3.313-2.687-6-6-6s-6 2.687-6 6c0 4.418-3 6-3 6h18s-3-1.582-3-6z"></path>
+          <path d="M13 18h-2v-2h2v2z"></path>
+          <path d="M13 22h-2v-1h2v1z"></path>
+        </svg>
+      </div>
+      <div class="text-container">
+        <h6>Messages</h6>
+        <p>4 New Messages</p>
+      </div>
+    </div>
+    
+    <!-- List Item 2: Pin Icon -->
+    <div class="list-group-item active" onclick="selectItem(this)" role="listitem">
+      <div class="icon text-white">
+        <!-- Pin Icon SVG -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 21l-4-4 7-7h0l-7-7 4-4v14z"></path>
+        </svg>
+      </div>
+      <div class="text-container">
+        <h6>Locations</h6>
+        <p>25 New Travel Locations</p>
+      </div>
+    </div>
+    
+    <!-- List Item 3: Gear Icon -->
+    <div class="list-group-item" onclick="selectItem(this)" role="listitem">
+      <div class="icon text-primary">
+        <!-- Gear Icon SVG -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19.14 12.94l1.42-1.42-3.41-3.41a6.87 6.87 0 0 0 .21-1.77l3.78-1.13-1.13-3.78-1.77.21a6.87 6.87 0 0 0-1.77-3.41l-3.41 3.41-1.42-1.42-1.13 3.78-3.78-1.13-1.13 3.78 3.41 3.41a6.87 6.87 0 0 0-.21 1.77l-3.78 1.13 1.13 3.78 1.77-.21a6.87 6.87 0 0 0 1.77 3.41l3.41-3.41 1.42 1.42 1.13-3.78 3.78 1.13 1.13-3.78z"></path>
+        </svg>
+      </div>
+      <div class="text-container">
+        <h6>Flexible</h6>
+        <p>Customization Flexibility</p>
+      </div>
+    </div>
+  </div>
+</component>
+
+
+
+<script>
+  function selectItem(item) {
+    const items = document.querySelectorAll(".list-group-item");
+    items.forEach((el) => el.classList.remove("active"));
+    item.classList.add("active");
+    console.log("Selected:", item.textContent.trim());
+  }
+</script>

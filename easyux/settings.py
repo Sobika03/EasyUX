@@ -39,6 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'openui',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',  
+    'social_django',  #add this
+    'myapp',  #add this
 ]
 
 MIDDLEWARE = [
@@ -49,6 +56,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',  #add this
 ]
 
 ROOT_URLCONF = 'easyux.urls'
@@ -64,6 +73,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',  #add this
             ],
             "builtins": [
                 "openui.templatetags.easyux_tags",
@@ -103,6 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+SITE_ID = 1
 
 
 # Internationalization
@@ -132,3 +143,19 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+#social app custom settings
+
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'social-auth-complete/'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '63212313343-hmi51qc8erc9735fldbk5i5qdh09ukdg.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET ='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'
+
+

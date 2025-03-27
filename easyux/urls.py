@@ -16,8 +16,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.contrib.auth import views as auth_views
+from myapp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('openui/', include('openui.urls')),
+    path('accounts/', include('allauth.urls')),
+    path('login/', views.login, name='login'), #add this
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'), #add this
+    path('social-auth/', include('social_django.urls', namespace='social')), #add this
+    path('social-auth-complete/', views.home, name='home'), #add this 
 ]

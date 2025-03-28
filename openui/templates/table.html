@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Person Table - Vristo Style</title>
+
+    <!-- Tabulator CSS -->
+    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet">
+
+    <!-- Tabulator JS -->
+    <script src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+            color: #000000;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            background-color: #bdbbd4;
+            color: rgb(0, 0, 0)!important;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        main {
+            flex: 1;
+            padding: 10px 20px;
+        }
+        .search-container {
+            margin-bottom: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        .search-container input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+        }
+        .search-container button {
+            padding: 8px 16px;
+            background-color: #4338ca;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        #example-table {
+            width: 100%;
+            height: 85vh;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+        .tabulator .tabulator-col-resize-handle {
+            border: 0 !important;
+        }
+        .tabulator-header {
+            background-color: #f3f4f6;
+            color: #111827;
+            font-weight: 600;
+            padding: 20px;
+        }
+        .tabulator-header {
+            border: 0 !important;
+        }
+        .tabulator-row {
+            background: white;
+            color: #5b6677;
+            padding: 20px;
+        }
+        .tabulator-row:hover {
+            background: #f9fafb !important;
+        }
+        .tabulator-footer {
+            background: #f9fafb;
+            padding: 10px;
+        }
+        .tabulator-page {
+            background: #f3f4f6;
+            color: #111827;
+            border: none;
+            margin: 0 3px;
+            padding: 5px 10px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .tabulator-page.active {
+            background: #4338ca;
+            color: white;
+        }
+        .tabulator-paginator label, 
+        .tabulator-page-counter {
+            color: #6b7280;
+        }
+        .tabulator-cell {
+            border: 0 !important;
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Search by Name, Email, Phone, Gender">
+            <button id="search-btn">Search</button>
+        </div>
+        <div id="example-table"></div>
+    </main>
+
+    <script>
+        var table = new Tabulator("#example-table", {
+            layout: "fitColumns",
+            ajaxURL: "{% url 'tabulator_view' %}",
+            ajaxConfig: "GET",
+            pagination: "local",
+            paginationSize: 20,
+            paginationSizeSelector: [3, 6, 10, 20],
+            movableColumns: true,
+            paginationCounter: "rows",
+            selectable: true,
+
+            columns: [
+                { formatter: "rowSelection", titleFormatter: "rowSelection", hozAlign: "center", headerHozAlign: "center", headerSort: false, width: 50 },
+                { title: "ID", field: "id", sorter: "number", width: 80, headerHozAlign: "center", hozAlign: "center" },
+                { title: "Name", field: "name", sorter: "string" },
+                { title: "Age", field: "age", sorter: "number", width: 100, hozAlign: "center" },
+                { title: "Email", field: "email", sorter: "string" },
+                { title: "Phone", field: "phone", sorter: "string" },
+                { title: "Gender", field: "gender", sorter: "string", hozAlign: "center" },
+            ],
+        });
+
+        document.getElementById("search-btn").addEventListener("click", function () {
+            var searchValue = document.getElementById("search-input").value.trim();
+
+            if (searchValue === "") {
+                table.clearFilter();
+            } else {
+                table.setFilter([
+                    [
+                        { field: "name", type: "like", value: searchValue },
+                        { field: "email", type: "like", value: searchValue },
+                        { field: "phone", type: "like", value: searchValue },
+                        { field: "gender", type: "like", value: searchValue },
+                    ]
+                ]);
+            }
+        });
+    </script>
+</body>
+</html>

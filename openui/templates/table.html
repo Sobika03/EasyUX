@@ -23,14 +23,14 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f9fafb;
-            color: #000000;
+            color: #111827;
             height: 100vh;
             display: flex;
             flex-direction: column;
         }
         header {
             background-color: #bdbbd4;
-            color: rgb(0, 0, 0)!important;
+            color: rgb(19, 17, 17);
             padding: 20px;
             text-align: center;
             font-size: 24px;
@@ -124,27 +124,39 @@
     </main>
 
     <script>
-        var table = new Tabulator("#example-table", {
-            layout: "fitColumns",
-            ajaxURL: "{% url 'tabulator_view' %}",
-            ajaxConfig: "GET",
-            pagination: "local",
-            paginationSize: 20,
-            paginationSizeSelector: [3, 6, 10, 20],
-            movableColumns: true,
-            paginationCounter: "rows",
-            selectable: true,
+var table = new Tabulator("#example-table", {
+        layout: "fitColumns",
+        ajaxURL: "{% url 'tabulator_view' %}",  // Fetch data from Django
+        ajaxConfig: "GET",
+        pagination: "remote",  // Enable server-side pagination
+        paginationSize: 10,  // Number of records per page
+        paginationSizeSelector: [10, 20, 50],  // Allow user to select page size
+        movableColumns: true,
+        paginationCounter: "rows",
+        selectable: true,
 
-            columns: [
-                { formatter: "rowSelection", titleFormatter: "rowSelection", hozAlign: "center", headerHozAlign: "center", headerSort: false, width: 50 },
-                { title: "ID", field: "id", sorter: "number", width: 80, headerHozAlign: "center", hozAlign: "center" },
-                { title: "Name", field: "name", sorter: "string" },
-                { title: "Age", field: "age", sorter: "number", width: 100, hozAlign: "center" },
-                { title: "Email", field: "email", sorter: "string" },
-                { title: "Phone", field: "phone", sorter: "string" },
-                { title: "Gender", field: "gender", sorter: "string", hozAlign: "center" },
-            ],
-        });
+        columns: [
+            { formatter: "rowSelection", titleFormatter: "rowSelection", hozAlign: "center", headerHozAlign: "center", headerSort: false, width: 50 },
+            { title: "ID", field: "id", sorter: "number", width: 80, headerHozAlign: "center", hozAlign: "center" },
+            { title: "Name", field: "name", sorter: "string" },
+            { title: "Age", field: "age", sorter: "number", width: 100, hozAlign: "center" },
+            { title: "Email", field: "email", sorter: "string" },
+            { title: "Phone", field: "phone", sorter: "string" },
+            { title: "Gender", field: "gender", sorter: "string", hozAlign: "center" },
+        ],
+
+        ajaxParams: function() {
+            return {
+                page: table.getPage(),  // Send current page
+                size: table.getPageSize(),  // Send page size
+            };
+        },
+
+        ajaxResponse: function(url, params, response) {
+            table.setMaxPage(response.last_page);  // Set last page dynamically
+            return response.data;  // Return only the data portion
+        }
+    });
 
         document.getElementById("search-btn").addEventListener("click", function () {
             var searchValue = document.getElementById("search-input").value.trim();

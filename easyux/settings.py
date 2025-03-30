@@ -16,7 +16,6 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -27,7 +26,6 @@ SECRET_KEY = 'django-insecure-7$&o!0s@nju9n&qa=m7hi_zeyic-)vgtn-p@8f_-9(g60z@szz
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -47,7 +45,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google', 
 
-    'myapp',  #add this
+    'authentication'
 ]
 
 MIDDLEWARE = [
@@ -85,7 +83,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'easyux.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -114,8 +111,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-SITE_ID = 1
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -145,24 +140,15 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# AUTHENTICATION_BACKENDS = [
+#     'social_core.backends.google.GoogleOAuth2',
 
-#social app custom settings
+#     # Needed to login by username in Django admin, regardless of `allauth`
+#     'django.contrib.auth.backends.ModelBackend',
 
-AUTHENTICATION_BACKENDS = [
-    'social_core.backends.google.GoogleOAuth2',
-    # Needed to login by username in Django admin, regardless of `allauth`
-    'django.contrib.auth.backends.ModelBackend',
-
-    # `allauth` specific authentication methods, such as login by email
-    'allauth.account.auth_backends.AuthenticationBackend',
-
-]
-
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'social-auth-complete/'
-
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '63212313343-hmi51qc8erc9735fldbk5i5qdh09ukdg.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET ='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'
+#     # `allauth` specific authentication methods, such as login by email
+#     'allauth.account.auth_backends.AuthenticationBackend',
+# ]
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
@@ -180,5 +166,7 @@ SOCIALACCOUNT_PROVIDERS = {
 # Django allauth config
 SITE_ID = 1
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_SIGNUP_FIELDS = ["email*", "username*", "password1*", "password2*"]
+ACCOUNT_LOGIN_METHODS = {"email"}
+
+# AUTH_USER_MODEL = 'authentication.CustomUser'

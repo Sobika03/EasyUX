@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google', 
 
-    'social_django',  #add this
     'myapp',  #add this
 ]
 
@@ -61,8 +60,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'allauth.account.middleware.AccountMiddleware',
-
-    'social_django.middleware.SocialAuthExceptionMiddleware',  #add this
 ]
 
 ROOT_URLCONF = 'easyux.urls'
@@ -78,7 +75,6 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'social_django.context_processors.backends',  #add this
             ],
             "builtins": [
                 "openui.templatetags.easyux_tags",

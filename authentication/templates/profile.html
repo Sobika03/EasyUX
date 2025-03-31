@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+</head>
+<body>
+    <h2>Welcome, {{ user.username }}</h2>
+    {% if user.socialaccount_set.all %}
+        {% for account in user.socialaccount_set.all %}
+            <p>Email: {{ account.extra_data.email }}</p>
+            <p>Google ID: {{ account.uid }}</p>
+            <img src="{{ account.extra_data.picture }}" alt="Profile Picture">
+        {% endfor %}
+    {% else %}
+        <p>No social accounts linked.</p>
+    {% endif %}
+    <br>
+</body>
+</html>

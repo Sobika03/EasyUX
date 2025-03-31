@@ -1,0 +1,69 @@
+<style>
+    /* General button styles */
+    .button {
+      display: inline-block;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      text-decoration: none;
+      outline: none;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    /* Hover effect */
+    .button:hover {
+      background-color: #0056b3;
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+    }
+    /* Active (pressed) effect */
+    .button:active {
+      transform: scale(0.96);
+    }
+    /* Disabled state */
+    .button.disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+      pointer-events: none;
+      box-shadow: none;
+    }
+    /* Different button variants */
+    .button.primary {
+      background-color: #28a745;
+    }
+    .button.primary:hover {
+      background-color: #218838;
+    }
+    .button.secondary {
+      background-color: #6c757d;
+    }
+    .button.secondary:hover {
+      background-color: #545b62;
+    }
+    .button.danger {
+      background-color: #dc3545;
+    }
+    .button.danger:hover {
+      background-color: #c82333;
+    }
+  </style>
+  
+  <component>
+    <button class="button" onclick="handleClick()">Click Me</button>
+    <button class="button primary" onclick="handleClick()">Primary Action</button>
+    <button class="button secondary" onclick="handleClick()">Secondary Action</button>
+    <button class="button danger" onclick="handleClick()">Delete</button>
+    <button class="button disabled">Disabled</button>
+  </component>
+  
+  <script>
+    function handleClick() {
+      alert("Button clicked!");
+    }
+  </script>
+  

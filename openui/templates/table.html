@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Person Table - Vristo Style</title>
-
+ 
     <!-- Tabulator CSS -->
     <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet">
-
+ 
     <!-- Tabulator JS -->
     <script src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
-
+ 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-
+ 
     <style>
         * {
             margin: 0;
@@ -23,14 +23,14 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: #f9fafb;
-            color: #000000;
+            color: #111827;
             height: 100vh;
             display: flex;
             flex-direction: column;
         }
         header {
             background-color: #bdbbd4;
-            color: rgb(0, 0, 0)!important;
+            color: rgb(19, 17, 17);
             padding: 20px;
             text-align: center;
             font-size: 24px;
@@ -104,7 +104,7 @@
             background: #4338ca;
             color: white;
         }
-        .tabulator-paginator label, 
+        .tabulator-paginator label,
         .tabulator-page-counter {
             color: #6b7280;
         }
@@ -114,7 +114,7 @@
     </style>
 </head>
 <body>
-
+ 
     <main>
         <div class="search-container">
             <input type="text" id="search-input" placeholder="Search by Name, Email, Phone, Gender">
@@ -122,45 +122,29 @@
         </div>
         <div id="example-table"></div>
     </main>
-
+ 
     <script>
+        //Build Tabulator
         var table = new Tabulator("#example-table", {
+            pagination:true, //enable pagination
+            paginationMode:"remote", //enable remote pagination            
+            // height: "311px",
             layout: "fitColumns",
             ajaxURL: "{% url 'tabulator_view' %}",
-            ajaxConfig: "GET",
-            pagination: "local",
-            paginationSize: 20,
-            paginationSizeSelector: [3, 6, 10, 20],
+            paginationSizeSelector: [10, 20, 50],  // Allow user to select page size
             movableColumns: true,
-            paginationCounter: "rows",
-            selectable: true,
-
+            paginationSize: 6, // Ensure page size is set
+            ajaxResponse: function(url, params, response) {
+                return response; // Extract only the array of records
+            },
+            placeholder: "No Data Available",
             columns: [
-                { formatter: "rowSelection", titleFormatter: "rowSelection", hozAlign: "center", headerHozAlign: "center", headerSort: false, width: 50 },
-                { title: "ID", field: "id", sorter: "number", width: 80, headerHozAlign: "center", hozAlign: "center" },
                 { title: "Name", field: "name", sorter: "string" },
                 { title: "Age", field: "age", sorter: "number", width: 100, hozAlign: "center" },
                 { title: "Email", field: "email", sorter: "string" },
                 { title: "Phone", field: "phone", sorter: "string" },
                 { title: "Gender", field: "gender", sorter: "string", hozAlign: "center" },
             ],
-        });
-
-        document.getElementById("search-btn").addEventListener("click", function () {
-            var searchValue = document.getElementById("search-input").value.trim();
-
-            if (searchValue === "") {
-                table.clearFilter();
-            } else {
-                table.setFilter([
-                    [
-                        { field: "name", type: "like", value: searchValue },
-                        { field: "email", type: "like", value: searchValue },
-                        { field: "phone", type: "like", value: searchValue },
-                        { field: "gender", type: "like", value: searchValue },
-                    ]
-                ]);
-            }
         });
     </script>
 </body>

@@ -1,0 +1,99 @@
+
+
+<style>
+    .bg-primary {
+        --tw-bg-opacity: 1;
+        background-color: rgb(67 97 238 / var(--tw-bg-opacity));
+    }
+    .rounded {
+        border-radius: .25rem;
+    }
+    .block {
+        display: block;
+    }
+    .-mb-\[1px\] {
+        margin-bottom: -1px;
+    }
+</style>
+<style>
+    /* Styles for the card */
+    .card {
+        width: 300px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        font-family: Arial, sans-serif;
+        background-color: #fff;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .card-header {
+        background-color: #007bff;
+        color: #fff;
+        padding: 15px;
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    .card-body p {
+        margin: 0 0 10px;
+        line-height: 1.5;
+    }
+
+    .card-footer {
+        background-color: #f8f9fa;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .card-footer button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s ease;
+    }
+
+    .card-footer button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<component>
+    <div class="card" id="my-card">
+        <div class="card-header">
+            Card Title
+        </div>
+        <div class="card-body">
+            <p>This is the body of the card. You can add any content here, such as text, images, or links.</p>
+        </div>
+        <div class="card-footer">
+            <button id="card-button">Click Me</button>
+        </div>
+    </div>
+</component>
+
+<script>
+    // Script for interactivity
+    document.addEventListener("DOMContentLoaded", function () {
+        const button = document.querySelector("#my-card .card-footer button");
+
+        button.addEventListener("click", function () {
+            alert("Button clicked! You can add custom functionality here.");
+        });
+    });
+</script>

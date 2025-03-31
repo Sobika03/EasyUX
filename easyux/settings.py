@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,14 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-
-    'openui',
-    
+  
+    'openui',    
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google', 
-
     'authentication'
 ]
 
@@ -65,7 +65,7 @@ ROOT_URLCONF = 'easyux.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR/'openui/templates'],
+        'DIRS':[ BASE_DIR/'openui/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -76,6 +76,11 @@ TEMPLATES = [
             ],
             "builtins": [
                 "openui.templatetags.easyux_tags",
+            ],
+            'loaders': [
+                # Loaders are applied in order
+                'django.template.loaders.filesystem.Loader',  # Load templates from DIRS
+                'django.template.loaders.app_directories.Loader',  # Load templates from app 'templates' folders
             ],
         },
     },
@@ -170,3 +175,4 @@ ACCOUNT_SIGNUP_FIELDS = ["email*", "username*", "password1*", "password2*"]
 ACCOUNT_LOGIN_METHODS = {"email"}
 
 # AUTH_USER_MODEL = 'authentication.CustomUser'
+

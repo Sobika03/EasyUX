@@ -1,0 +1,160 @@
+<style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Source Sans Pro", sans-serif;
+    }
+
+    body {
+    background-color: #dff9fb;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    }
+
+    h1 {
+    text-align: center;
+    margin-top: 2rem;
+    }
+
+    p {
+    text-align: center;
+    margin-bottom: 4rem;
+    }
+
+    .pricing {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    }
+    .pricing .plan {
+    background-color: #fff;
+    padding: 2.5rem;
+    margin: 12px;
+    border-radius: 5px;
+    text-align: center;
+    transition: 0.3s;
+    cursor: pointer;
+    }
+    .pricing .plan h2 {
+    font-size: 22px;
+    margin-bottom: 12px;
+    }
+    .pricing .plan .price {
+    margin-bottom: 1rem;
+    font-size: 30px;
+    }
+    .pricing .plan ul.features {
+    list-style-type: none;
+    text-align: left;
+    }
+    .pricing .plan ul.features li {
+    margin: 8px;
+    }
+    .pricing .plan ul.features li .fas {
+    margin-right: 4px;
+    }
+    .pricing .plan ul.features li .fa-check-circle {
+    color: #b04ca9;
+    }
+    .pricing .plan ul.features li .fa-times-circle {
+    color: #eb4d4b;
+    }
+    .pricing .plan button {
+    border: none;
+    width: 100%;
+    padding: 12px 35px;
+    margin-top: 1rem;
+    background-color: #a84cb0;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    }
+    .pricing .plan.popular {
+    border: 2px solid #a14cb0;
+    position: relative;
+    transform: scale(1.08);
+    }
+    .pricing .plan.popular span {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #b04ca9;
+    color: #fff;
+    padding: 4px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    }
+    .pricing .plan:hover {
+    box-shadow: 5px 7px 67px -28px rgba(0, 0, 0, 0.37);
+    }
+
+    /* Container for the tick box */
+    .tick-box {
+        width: 25px; /* Size of the box */
+        height: 20px; /* Size of the box */
+        background-color: #4caf50; /* Background color (green) */
+        border-radius: 50%; /* Makes the box round */
+        /* display: flex; */
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+        transition: background-color 0.3s ease; /* Smooth color transition */
+    }
+
+    /* Tick mark inside the box */
+    .tick-box::before {
+        content: '✔'; /* Unicode tick symbol */
+        font-size: 10px; /* Size of the tick */
+        color: white; /* Color of the tick */
+        font-weight: bold;
+        opacity: 1; /* Fully visible by default */
+        transition: opacity 0.3s ease; /* Smooth fade-in/fade-out effect */
+    }
+</style>
+<component>
+    <div class="pricing">
+        <div class="plan">
+          <h2>Dev</h2>
+          <div class="price">FREE</div>
+          <ul class="features">
+            <li><i class="tick-box" id="tickBox"></i> Unlimited Websites</li>
+            <li><i class="tick-box" id="tickBox"></i> 1 User</li>
+            <li><i class="tick-box" id="tickBox"></i> 100MB Space/website</li>
+            <li><i class="tick-box" id="tickBox"></i> Continuous deployment</li>
+            <li><i class="tick-box" id="tickBox"></i> No priority support</li>
+          </ul>
+          <button>Signup</button>
+        </div>
+        <div class="plan popular">
+          <span>Most Popular</span>
+          <h2>Pro</h2>
+          <div class="price">$10/month</div>
+          <ul class="features">
+            <li><i class="fas fa-check-circle"></i> Unlimited Websites</li>
+            <li><i class="fas fa-check-circle"></i> 5 Users</li>
+            <li><i class="fas fa-check-circle"></i> 512MB Space/website</li>
+            <li><i class="fas fa-check-circle"></i> Continuous deployment</li>
+            <li><i class="fas fa-check-circle"></i> Email Support</li>
+          </ul>
+          <button>Buy Now</button>
+        </div>
+        <div class="plan">
+          <h2>Enterprise</h2>
+          <div class="price">Custom Pricing</div>
+          <ul class="features">
+            <li><i class="fas fa-check-circle"></i> Unlimited Websites</li>
+            <li><i class="fas fa-check-circle"></i> Unlimited Users</li>
+            <li><i class="fas fa-check-circle"></i> Unlimited Space/website</li>
+            <li><i class="fas fa-check-circle"></i> Continuous deployment</li>
+            <li><i class="fas fa-check-circle"></i> 24/7 Email support</li>
+          </ul>
+          <button>Contact Us</button>
+        </div>
+      </div>
+</component>

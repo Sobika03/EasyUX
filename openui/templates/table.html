@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Person Table - Vristo Style</title>
-
+ 
     <!-- Tabulator CSS -->
     <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator.min.css" rel="stylesheet">
-
+ 
     <!-- Tabulator JS -->
     <script src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
-
+ 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-
+ 
     <style>
         * {
             margin: 0;
@@ -104,7 +104,7 @@
             background: #4338ca;
             color: white;
         }
-        .tabulator-paginator label, 
+        .tabulator-paginator label,
         .tabulator-page-counter {
             color: #6b7280;
         }
@@ -114,7 +114,7 @@
     </style>
 </head>
 <body>
-
+ 
     <main>
         <div class="search-container">
             <input type="text" id="search-input" placeholder="Search by Name, Email, Phone, Gender">
@@ -122,57 +122,29 @@
         </div>
         <div id="example-table"></div>
     </main>
-
+ 
     <script>
-var table = new Tabulator("#example-table", {
-        layout: "fitColumns",
-        ajaxURL: "{% url 'tabulator_view' %}",  // Fetch data from Django
-        ajaxConfig: "GET",
-        pagination: "remote",  // Enable server-side pagination
-        paginationSize: 10,  // Number of records per page
-        paginationSizeSelector: [10, 20, 50],  // Allow user to select page size
-        movableColumns: true,
-        paginationCounter: "rows",
-        selectable: true,
-
-        columns: [
-            { formatter: "rowSelection", titleFormatter: "rowSelection", hozAlign: "center", headerHozAlign: "center", headerSort: false, width: 50 },
-            { title: "ID", field: "id", sorter: "number", width: 80, headerHozAlign: "center", hozAlign: "center" },
-            { title: "Name", field: "name", sorter: "string" },
-            { title: "Age", field: "age", sorter: "number", width: 100, hozAlign: "center" },
-            { title: "Email", field: "email", sorter: "string" },
-            { title: "Phone", field: "phone", sorter: "string" },
-            { title: "Gender", field: "gender", sorter: "string", hozAlign: "center" },
-        ],
-
-        ajaxParams: function() {
-            return {
-                page: table.getPage(),  // Send current page
-                size: table.getPageSize(),  // Send page size
-            };
-        },
-
-        ajaxResponse: function(url, params, response) {
-            table.setMaxPage(response.last_page);  // Set last page dynamically
-            return response.data;  // Return only the data portion
-        }
-    });
-
-        document.getElementById("search-btn").addEventListener("click", function () {
-            var searchValue = document.getElementById("search-input").value.trim();
-
-            if (searchValue === "") {
-                table.clearFilter();
-            } else {
-                table.setFilter([
-                    [
-                        { field: "name", type: "like", value: searchValue },
-                        { field: "email", type: "like", value: searchValue },
-                        { field: "phone", type: "like", value: searchValue },
-                        { field: "gender", type: "like", value: searchValue },
-                    ]
-                ]);
-            }
+        //Build Tabulator
+        var table = new Tabulator("#example-table", {
+            pagination:true, //enable pagination
+            paginationMode:"remote", //enable remote pagination            
+            // height: "311px",
+            layout: "fitColumns",
+            ajaxURL: "{% url 'tabulator_view' %}",
+            paginationSizeSelector: [10, 20, 50],  // Allow user to select page size
+            movableColumns: true,
+            paginationSize: 6, // Ensure page size is set
+            ajaxResponse: function(url, params, response) {
+                return response; // Extract only the array of records
+            },
+            placeholder: "No Data Available",
+            columns: [
+                { title: "Name", field: "name", sorter: "string" },
+                { title: "Age", field: "age", sorter: "number", width: 100, hozAlign: "center" },
+                { title: "Email", field: "email", sorter: "string" },
+                { title: "Phone", field: "phone", sorter: "string" },
+                { title: "Gender", field: "gender", sorter: "string", hozAlign: "center" },
+            ],
         });
     </script>
 </body>

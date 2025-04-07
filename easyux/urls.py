@@ -23,4 +23,5 @@ urlpatterns = [
 
     path('openui/', include('openui.urls')),
     path('authentication/', include('authentication.urls')),
+
 ]

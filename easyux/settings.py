@@ -11,44 +11,59 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+import environ
 import os
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Take environment variables from .env file
+env = environ.Env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-7$&o!0s@nju9n&qa=m7hi_zeyic-)vgtn-p@8f_-9(g60z@szz'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DEBUG')
 
 ALLOWED_HOSTS = []
 
-
-# Application definition
-
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'openui',
-    'django.contrib.sites',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',  
-    'social_django',  #add this
-    'myapp',  #add this
+# APPS
+# ------------------------------------------------------------------------------
+DJANGO_APPS = [
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.sites",
 ]
 
-MIDDLEWARE = [
+THIRD_PARTY_APPS = []
+
+if env.bool('GOOGLE_LOGIN'):
+    THIRD_PARTY_APPS.extend([
+        'allauth',
+        'allauth.account',
+        'allauth.socialaccount',
+        'allauth.socialaccount.providers.google',
+    ])
+
+LOCAL_APPS = [
+    'openui',
+    'authentication'
+]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
+
+DJANGO_MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -56,16 +71,25 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'allauth.account.middleware.AccountMiddleware',
-    'social_django.middleware.SocialAuthExceptionMiddleware',  #add this
 ]
+
+THIRD_PARTY_MIDDLEWARE = []
+
+if env('GOOGLE_LOGIN'):
+    THIRD_PARTY_MIDDLEWARE.extend([
+        'allauth.account.middleware.AccountMiddleware',
+    ])
+
+LOCAL_MIDDLEWARE = []
+
+MIDDLEWARE = DJANGO_MIDDLEWARE + THIRD_PARTY_MIDDLEWARE + LOCAL_MIDDLEWARE
 
 ROOT_URLCONF = 'easyux.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR/'openui/templates'],
+        'DIRS':[ BASE_DIR/'openui/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -73,10 +97,16 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'social_django.context_processors.backends',  #add this
+                "django.template.context_processors.media",
+                "django.template.context_processors.static",                
             ],
             "builtins": [
                 "openui.templatetags.easyux_tags",
+            ],
+            'loaders': [
+                # Loaders are applied in order
+                'django.template.loaders.filesystem.Loader',  # Load templates from DIRS
+                'django.template.loaders.app_directories.Loader',  # Load templates from app 'templates' folders
             ],
         },
     },
@@ -84,16 +114,46 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'easyux.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if env('ENGINE') == 'SQLITE':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+elif env('ENGINE') == 'POSTGRESQL':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': env('POSTGRES_DB'),
+            'USER': env('POSTGRES_USER'),
+            'PASSWORD': env('POSTGRES_PASSWORD'),
+            'HOST': env('POSTGRES_HOST'),
+            'PORT': env('POSTGRES_PORT'),
+            'OPTIONS': {
+                'sslmode': env('POSTGRES_SSLMODE'),
+            },
+        }
+    }
+elif env('ENGINE') == 'MSSQL':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'mssql',
+            'NAME': env('MSSQL_DB'),
+            'USER': env('MSSQL_USER'),
+            'PASSWORD': env('MSSQL_PASSWORD'),
+            'HOST': env('MSSQL_HOST'),
+            'PORT': env('MSSQL_PORT'),
+            'OPTIONS': {
+                'driver': env('MSSQL_DRIVER'),
+            },
+        }
+    }
+else:
+    DATABASES = {}
 
 
 # Password validation
@@ -113,8 +173,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-SITE_ID = 1
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
@@ -144,18 +202,21 @@ LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'OAUTH_PKCE_ENABLED': True,
+    }
+}
 
-#social app custom settings
-
-AUTHENTICATION_BACKENDS = [
-    'social_core.backends.google.GoogleOAuth2',
-    'django.contrib.auth.backends.ModelBackend',
-]
-
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'social-auth-complete/'
-
-SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '63212313343-hmi51qc8erc9735fldbk5i5qdh09ukdg.apps.googleusercontent.com'
-SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET ='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'
-
-
+# Django allauth config
+SITE_ID = 1
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_SIGNUP_FIELDS = ["email*", "username*", "password1*", "password2*"]
+ACCOUNT_LOGIN_METHODS = {"email"}

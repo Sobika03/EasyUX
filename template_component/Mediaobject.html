@@ -1,0 +1,146 @@
+<style>
+    /* General Panel Styles */
+    .flex {
+        display: flex;
+        gap: 20px;
+    }
+    .panel {
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        background-color: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        font-family: Arial, sans-serif;
+    }
+
+    /* Header Styles */
+    .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: right;
+        margin-bottom: 20px;
+
+
+    }
+
+    .panel-header h5 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin: 0;
+        color: #333;
+    }
+
+    .panel-header a {
+        text-decoration: none;
+        font-weight: 600;
+        color: #6b7280;
+        display: flex;
+        align-items: center;
+    }
+
+    .panel-header a:hover {
+        color: #9ca3af;
+    }
+
+    .panel-header svg {
+        width: 1.25rem;
+        height: 1.25rem;
+        margin-right: 0.5rem;
+        fill: currentColor;
+    }
+
+    /* Media Object Styles */
+    .media-object {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 20px;
+    }
+
+    .media-object img {
+        width: 4rem;
+        height: 4rem;
+        object-fit: cover;
+        margin-right: 1rem;
+    }
+
+    .media-content {
+        flex: 1;
+    }
+
+    .media-content h4 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin: 0 0 0.5rem;
+        color: #3b82f6; /* Primary color */
+    }
+
+    .media-content p {
+        font-size: 0.875rem;
+        line-height: 1.5;
+        color: #6b7280; /* Gray text */
+        margin: 0;
+    }
+
+    /* Code Block Styles */
+    pre.code {
+        background-color: #191e3a;
+        color: #fff;
+        padding: 1rem;
+        border-radius: 8px;
+        overflow-x: auto;
+        font-family: "Courier New", monospace;
+        font-size: 0.875rem;
+        display: none; /* Hidden by default */
+    }
+
+    pre.code.active {
+        display: block; /* Show when active */
+    }
+</style>
+
+<component >
+    <div class="flex">
+        <div class="panel" id="media-object-panel">
+            <!-- Header -->
+            <div class="panel-header">
+                <h5>Simple</h5>
+            </div>
+    
+            <!-- Media Object -->
+            <div class="media-object">
+                <div>
+                    <img src="https://placehold.co/50x43/EEE/31343C" alt="image">
+                </div>
+                <div class="media-content">
+                    <h4>Heading</h4>
+                    <p>
+                        Fusce condimentum cursus mauris et ornare. Mauris fermentum mi id sollicitudin viverra. Aenean dignissim sed
+                        ante eget dapibus. Sed dapibus nulla elementum, rutrum neque eu, gravida neque.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="panel" id="media-object-panel">
+            <!-- Header -->
+            <div class="panel-header">
+                <h5>Simple</h5>
+            </div>
+    
+            <!-- Media Object -->
+            <div class="media-object">
+               
+                <div class="media-content">
+                    <h4>Heading</h4>
+                    <p> 
+                        Fusce condimentum cursus mauris et ornare. Mauris fermentum mi id sollicitudin viverra. Aenean dignissim sed
+                        ante eget dapibus. Sed dapibus nulla elementum, rutrum neque eu, gravida neque.
+                    </p>
+                </div>
+                <div>
+                    <img src="https://placehold.co/50x43/EEE/31343C" alt="image">
+                </div>
+            </div>
+        </div>
+    </div>
+</component>
+

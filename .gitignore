@@ -4,7 +4,7 @@
 *.pyc
 __pycache__/
 local_settings.py
-db.sqlite3
+#db.sqlite3
 db.sqlite3-journal
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
@@ -176,3 +176,4 @@ cython_debug/
 # Ignore migrations folder but allow __init__.py
 # **/migrations/*
 # !88/migrations/__init__.py
+.qodo

@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #c3cfe2, #c3cfe2);
+      padding: 20px;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: row;
+      width: 900px;
+      max-width: 100%;
+      height: auto;
+      background-color: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .left-panel, .right-panel {
+      flex: 1;
+      padding: 40px;
+    }
+
+    .left-panel {
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .left-panel h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .left-panel p {
+      font-size: 16px;
+      text-align: center;
+    }
+
+    .right-panel {
+      background-color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .right-panel h2 {
+      font-size: 28px;
+      margin-bottom: 30px;
+      color: #333;
+      text-align: center;
+    }
+
+    form {
+      width: 100%;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 14px;
+      border-radius: 30px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      padding-left: 20px;
+      background-color: #f9f9f9;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #6a11cb;
+    }
+
+    .form-group label {
+      display: none;
+    }
+
+    .form-remember {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .form-remember label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .btn-login {
+      width: 100%;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      border: none;
+      border-radius: 30px;
+      color: white;
+      padding: 14px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .btn-login:hover {
+      background: linear-gradient(135deg, #4c099b, #1a5bbf);
+    }
+
+    .footer-text,
+    .social-login {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #555;
+      text-align: center;
+    }
+
+    .footer-text a,
+    .social-login a {
+      color: #6a11cb;
+      text-decoration: none;
+    }
+
+    .footer-text a:hover,
+    .social-login a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .left-panel,
+      .right-panel {
+        width: 100%;
+        padding: 30px 20px;
+        text-align: center;
+      }
+
+      .form-remember {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .left-panel h1 {
+        font-size: 28px;
+      }
+
+      .right-panel h2 {
+        font-size: 24px;
+      }
+
+      .form-group input {
+        padding: 12px;
+        font-size: 14px;
+      }
+
+      .btn-login {
+        padding: 12px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="left-panel">
+      <h1>Welcome back!</h1>
+      <p>You can sign in to access with your existing account.</p>
+    </div>
+    <div class="right-panel">
+      <h2>Sign In</h2>
+      <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="id_username">Username</label>
+          <input type="email" name="username" id="id_username" required placeholder="Username or email" />
+        </div>
+
+        <div class="form-group">
+          <label for="id_password">Password</label>
+          <input type="password" name="password" id="id_password" required placeholder="Password" />
+        </div>
+
+        <div class="form-remember">
+          <label><input type="checkbox" name="remember" /> Remember me</label>
+          <a href="#">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn-login">Sign In</button>
+      </form>
+
+      {% load socialaccount %}
+      <div class="social-login">
+        <p>Or</p>
+        <a href="{% provider_login_url 'google' %}">Login with Google</a>
+      </div>
+
+      <div class="footer-text">
+        Don't have an account? <a href="{% url 'account_signup' %}">Sign up</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

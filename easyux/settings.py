@@ -220,3 +220,8 @@ SITE_ID = 1
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_SIGNUP_FIELDS = ["email*", "username*", "password1*", "password2*"]
 ACCOUNT_LOGIN_METHODS = {"email"}
+
+
+
+# LOGIN_REDIRECT_URL after successful authentication
+LOGIN_REDIRECT_URL = '/accounts/google/login/callback/'  # Redirect user to their profile page

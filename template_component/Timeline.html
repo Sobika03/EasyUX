@@ -1,0 +1,189 @@
+<style>
+    /* General Reset */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* Panel Styling */
+    .panel {
+        padding: 20px;
+        background-color: #f9fafb; /* Light gray background */
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        width: 600px; /* Fixed width for the panel */
+        max-width: 100%; /* Ensure responsiveness */
+        font-family: Arial, sans-serif;
+    }
+
+    /* Heading Styling */
+    .panel h5 {
+        font-size: 1.2rem; /* Equivalent to text-lg */
+        font-weight: 600; /* Equivalent to font-semibold */
+        color: #333; /* Dark text color */
+        margin-bottom: 20px; /* Equivalent to mb-5 */
+    }
+
+    /* Flex Container Styling */
+    .flex {
+        display: flex;
+        align-items: center; /* Align items vertically in the center */
+    }
+
+    /* Time Column Styling */
+    .time-column {
+        min-width: 58px;
+        max-width: 100px;
+        font-size: 1rem; /* Equivalent to text-base */
+        font-weight: 600; /* Equivalent to font-semibold */
+        color: #3b3f5c; /* Dark blue-gray text color */
+        text-align: center;
+        padding: 10px 0; /* Equivalent to py-2.5 */
+    }
+
+    /* Timeline Dot Styling */
+    .timeline-dot {
+        position: relative;
+        width: 20px; /* Space for the dot */
+        height: 100%; /* Full height of the row */
+    }
+
+    .timeline-dot::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 10px;
+        height: 10px;
+        border: 2px solid #007bff; /* Primary blue color */
+        border-radius: 50%; /* Circular dot */
+        background-color: #fff; /* White background for contrast */
+    }
+
+    .timeline-dot::after {
+        content: '';
+        position: absolute;
+        padding-top: 20px;
+        top: 6px;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 2px;
+        height: 11;
+        background-color: #007bff; /* Primary blue color */
+    }
+
+    .timeline-container .flex:last-child .timeline-dot::after {
+        display: none;
+    }
+
+    /* Event Content Styling */
+    .event-content {
+        padding-left: 20px; /* Space between dot and content */
+    }
+
+    .event-title {
+        font-size: 13px; /* Equivalent to text-[13px] */
+        font-weight: 600; /* Equivalent to font-semibold */
+        color: #3b3f5c; /* Dark blue-gray text color */
+        margin-bottom: 5px; /* Spacing between title and time */
+    }
+
+    .event-time {
+        font-size: 12px; /* Equivalent to text-xs */
+        font-weight: bold; /* Equivalent to font-bold */
+        color: #6c757d; /* Gray text color */
+    }
+
+    /* Hover Effect for Links */
+    a {
+        color: #007bff; /* Primary blue color */
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    a:hover {
+        color: #0056b3; /* Darker blue on hover */
+    }
+    .container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+
+<component>
+    <div class="container">
+        <div class="panel">
+            <!-- Heading -->
+            <div>
+                <h5>Basic Timeline</h5>
+            </div>
+    
+            <!-- Timeline Content -->
+            <div class="timeline-container">
+                <!-- Event 1 -->
+                <div class="flex">
+                    <p class="time-column">10:00</p>
+                    <div class="timeline-dot"></div>
+                    <div class="event-content">
+                        <p class="event-title">Updated Server Logs</p>
+                        <p class="event-time">25 mins ago</p>
+                    </div>
+                </div>
+    
+                <!-- Event 2 -->
+                <div class="flex">
+                    <p class="time-column">12:45</p>
+                    <div class="timeline-dot"></div>
+                    <div class="event-content">
+                        <p class="event-title">Backup Files EOD</p>
+                        <p class="event-time">2 hrs ago</p>
+                    </div>
+                </div>
+    
+                <!-- Event 3 -->
+                <div class="flex">
+                    <p class="time-column">14:00</p>
+                    <div class="timeline-dot"></div>
+                    <div class="event-content">
+                        <p class="event-title">Send Mail to HR and Admin</p>
+                        <p class="event-time">4 hrs ago</p>
+                    </div>
+                </div>
+    
+                <!-- Event 4 -->
+                <div class="flex">
+                    <p class="time-column">16:00</p>
+                    <div class="timeline-dot"></div>
+                    <div class="event-content">
+                        <p class="event-title">Conference call with Marketing Manager.</p>
+                        <p class="event-time">6 hrs ago</p>
+                    </div>
+                </div>
+    
+                <!-- Event 5 -->
+                <div class="flex">
+                    <p class="time-column">17:00</p>
+                    <div class="timeline-dot"></div>
+                    <div class="event-content">
+                        <p class="event-title">Collected documents from Sara</p>
+                        <p class="event-time">9 hrs ago</p>
+                    </div>
+                </div>
+    
+                <!-- Event 6 -->
+                <div class="flex">
+                    <p class="time-column">16:00</p>
+                    <div class="timeline-dot"></div>
+                    <div class="event-content">
+                        <p class="event-title">Server rebooted successfully</p>
+                        <p class="event-time">8 hrs ago</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</component>

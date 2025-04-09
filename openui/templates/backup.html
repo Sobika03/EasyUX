@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Backups</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      background-color: #f3f4f6; 
+      padding: 1.5rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
+    
+    
+    <h2 class="text-2xl font-bold flex items-center mb-6">
+      <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v16h16V4H4z" />
+      </svg>
+      BACKUPS
+    </h2>
+
+    
+    <form id="backupForm" class="mb-6">
+      {% csrf_token %}
+      <button type="submit" class="bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600 text-white font-semibold py-2 px-6 rounded-full transition duration-300 ease-in-out">
+        <svg class="w-4 h-4 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+        Create New Backup
+      </button>
+    </form>
+
+    
+    <div id="backupList" class="space-y-4">
+      {% for file in files %}
+        <div class="flex justify-between items-center bg-gray-50 px-4 py-3 rounded-lg shadow-sm">
+          <span class="text-gray-700 font-medium">{{ file }}</span>
+          <div class="flex space-x-3">
+            <a href="{% url 'download-dump' file %}" class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-4 py-1.5 rounded-full transition">Download</a>
+            <form method="POST" action="{% url 'delete-dump' file %}">
+              {% csrf_token %}
+              <button type="submit" class="bg-red-500 hover:bg-red-600 text-white text-sm px-4 py-1.5 rounded-full transition">Delete</button>
+            </form>
+          </div>
+        </div>
+      {% empty %}
+        <p class="text-gray-500 text-center">No backup files found.</p>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+
+<!-- Script -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("backupForm");
+    const backupList = document.getElementById("backupList");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault(); // Prevent page reload
+
+      const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+      fetch("{% url 'dump_data_view' %}", {
+        method: "POST",
+        headers: {
+          "X-CSRFToken": csrfToken,
+        },
+      })
+        .then((response) => {
+          if (!response.ok) throw new Error("Failed to create backup.");
+          return response.json();
+        })
+        .then((data) => {
+          const newFile = data.filename;
+          const downloadUrl = `{% url 'download-dump' 'FILENAME_REPLACE' %}`.replace('FILENAME_REPLACE', newFile);
+          const deleteUrl = `{% url 'delete-dump' 'FILENAME_REPLACE' %}`.replace('FILENAME_REPLACE', newFile);
+
+          const fileElement = `
+            <div class="flex justify-between items-center bg-gray-50 px-4 py-3 rounded-lg shadow-sm">
+              <span class="text-gray-700 font-medium">${newFile}</span>
+              <div class="flex space-x-3">
+                <a href="${downloadUrl}" class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-4 py-1.5 rounded-full transition">Download</a>
+                <form method="POST" action="${deleteUrl}">
+                  <input type="hidden" name="csrfmiddlewaretoken" value="${csrfToken}">
+                  <button type="submit" class="bg-red-500 hover:bg-red-600 text-white text-sm px-4 py-1.5 rounded-full transition">Delete</button>
+                </form>
+              </div>
+            </div>`;
+          backupList.insertAdjacentHTML("afterbegin", fileElement);
+        })
+        .catch((error) => {
+          alert("Error: " + error.message);
+        });
+    });
+  });
+</script>
+</html>

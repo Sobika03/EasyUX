@@ -4,6 +4,15 @@ from django.http import JsonResponse
 from openui.models import Person
 from slack_integration.views import send_slack_message
 from .models import Person
+from django.http import HttpResponse
+from django.conf import settings
+from django.core.management import call_command
+import os
+from django.shortcuts import render, redirect
+from django.http import FileResponse, HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.core.management import call_command
+from datetime import datetime
  
 # Create your views here.
 def sample(request):
@@ -36,3 +45,49 @@ def tabulator_view(request):
         })
  
     return render(request, 'table.html')
+
+
+
+def backup_data(request):
+    return render(request, 'backup.html')
+
+
+
+
+def list_backup_files(request):
+    fixtures_dir = os.path.join(settings.BASE_DIR, 'attendance', 'fixtures')
+    os.makedirs(fixtures_dir, exist_ok=True)
+    files = [f for f in os.listdir(fixtures_dir) if f.endswith('.json')]
+    return render(request, 'backup.html', {'files': files})
+
+
+@csrf_exempt
+def dump_data_to_json(request):
+    if request.method == "POST":
+        fixtures_dir = os.path.join(settings.BASE_DIR, 'attendance', 'fixtures')
+        os.makedirs(fixtures_dir, exist_ok=True)
+
+        filename = f"data_dump_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+        file_path = os.path.join(fixtures_dir, filename)
+
+        with open(file_path, 'w') as f:
+            call_command('dumpdata', indent=4, stdout=f)
+
+        return JsonResponse({"message": "Backup created successfully", "filename": filename})
+    return JsonResponse({"error": "Invalid request"}, status=400)
+
+def download_dumped_data(request, filename):
+    file_path = os.path.join(settings.BASE_DIR, 'attendance', 'fixtures', filename)
+    if os.path.exists(file_path):
+        return FileResponse(open(file_path, 'rb'), as_attachment=True, filename=filename)
+    return HttpResponse("File not found.", status=404)
+
+
+
+def delete_backup_file(request, filename):
+    file_path = os.path.join(settings.BASE_DIR, 'attendance', 'fixtures', filename)
+    if os.path.exists(file_path):
+        os.remove(file_path)
+    return redirect('backup-page')       
+
+    

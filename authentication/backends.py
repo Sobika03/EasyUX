@@ -6,6 +6,7 @@ UserModel = get_user_model()
 
 class MyCustomAuthBackend(BaseBackend):
     def authenticate(self, request, username=None, password=None):
+        print('aaaa')
         try:
             user = UserModel.objects.get(email=username)
 

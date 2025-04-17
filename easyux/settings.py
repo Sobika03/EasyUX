@@ -93,6 +93,8 @@ DJANGO_MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'authentication.middleware.force_password_change.ForcePasswordChangeMiddleware',
 ]
 
 THIRD_PARTY_MIDDLEWARE = []

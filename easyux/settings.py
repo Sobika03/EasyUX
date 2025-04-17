@@ -252,3 +252,7 @@ LOGIN_REDIRECT_URL = '/accounts/google/login/callback/'  # Redirect user to thei
 LOGIN_URL = 'admin/login/'  # custom login page
 
 AUTH_USER_MODEL = 'authentication.CustomUser'
+
+# For development, this prints emails to the console
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'webmaster@yourdomain.com'

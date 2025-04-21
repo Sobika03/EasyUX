@@ -4,6 +4,7 @@ from core.models import Organization
 
 class CustomUser(AbstractUser):
     organization = models.ForeignKey(Organization, blank=True, null=True, on_delete=models.PROTECT)
+    must_change_password = models.BooleanField(default=False)
 
     # Set related_name to avoid clash with the default User model
     groups = models.ManyToManyField(

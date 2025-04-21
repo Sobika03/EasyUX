@@ -93,6 +93,8 @@ DJANGO_MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    'authentication.middleware.force_password_change.ForcePasswordChangeMiddleware',
 ]
 
 THIRD_PARTY_MIDDLEWARE = []
@@ -252,3 +254,7 @@ LOGIN_REDIRECT_URL = '/accounts/google/login/callback/'  # Redirect user to thei
 LOGIN_URL = 'admin/login/'  # custom login page
 
 AUTH_USER_MODEL = 'authentication.CustomUser'
+
+# For development, this prints emails to the console
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'webmaster@yourdomain.com'

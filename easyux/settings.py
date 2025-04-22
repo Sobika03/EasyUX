@@ -95,6 +95,9 @@ DJANGO_MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'authentication.middleware.force_password_change.ForcePasswordChangeMiddleware',
+
+    # Enable after development is done
+    # 'authentication.middleware.subscription.SubscriptionRequiredMiddleware',
 ]
 
 THIRD_PARTY_MIDDLEWARE = []

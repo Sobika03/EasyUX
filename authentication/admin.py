@@ -2,7 +2,7 @@
 from email.quoprimime import unquote
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import CustomUser
+from .models import CustomUser, SubscriptionPlan, Subscription
 from django.contrib.auth.forms import AdminPasswordChangeForm
 from django.contrib import messages
 from django.utils.translation import gettext_lazy as _
@@ -71,3 +71,16 @@ class CustomUserAdmin(UserAdmin):
         return render(request, 'admin/auth/user/change_password.html', context)
 
 admin.site.register(CustomUser, CustomUserAdmin)
+
+
+@admin.register(SubscriptionPlan)
+class SubscriptionPlanAdmin(admin.ModelAdmin):
+    list_display = ('name', 'price', 'duration_days', 'is_active')
+    search_fields = ('name',)
+    list_filter = ('is_active',)
+
+@admin.register(Subscription)
+class SubscriptionAdmin(admin.ModelAdmin):
+    list_display = ('organization', 'plan', 'start_date', 'end_date', 'is_active')
+    search_fields = ('organization__name', 'plan__name')
+    list_filter = ('plan', 'start_date', 'end_date')

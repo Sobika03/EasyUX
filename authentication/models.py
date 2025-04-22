@@ -20,3 +20,28 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
+
+
+class SubscriptionPlan(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(blank=True)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
+    duration_days = models.PositiveIntegerField()  # e.g. 30 for monthly, 365 for yearly
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.name
+
+from django.utils.timezone import now, timedelta
+
+class Subscription(models.Model):
+    organization = models.OneToOneField(Organization, on_delete=models.CASCADE, related_name='subscription')
+    plan = models.ForeignKey(SubscriptionPlan, on_delete=models.PROTECT)
+    start_date = models.DateTimeField(default=now)
+    end_date = models.DateTimeField()
+
+    def is_active(self):
+        return self.end_date >= now()
+
+    def __str__(self):
+        return f"{self.organization.name} - {self.plan.name}"

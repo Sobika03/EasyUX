@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.paginator import Paginator
 from django.http import JsonResponse
 from openui.models import Person
@@ -13,6 +13,16 @@ from django.http import FileResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.core.management import call_command
 from datetime import datetime
+from django.shortcuts import render, get_object_or_404
+from authentication.models import Organization
+
+def get_org_name_from_email(email):
+    try:
+        domain = email.split('@')[1]  # organization.com
+        org_name = domain.split('.')[0]  # organization
+        return org_name
+    except IndexError:
+        return None
  
 # Create your views here.
 def sample(request):
@@ -91,3 +101,24 @@ def delete_backup_file(request, filename):
     return redirect('backup-page')       
 
     
+def dashboard_view(request):
+    user = request.user
+
+    if not user.is_authenticated:
+        return redirect('login')
+
+    org_id = user.organization_id
+
+    if org_id:
+        try:
+            # Fetch the organization using the org_name
+            organization = Organization.objects.get(pk=org_id)
+        except Organization.DoesNotExist:
+            # Handle the case where the organization does not exist
+            return render(request, 'dashboard.html', {'message': 'Superuser'})
+        context = {
+            'organization': organization
+        }
+        return render(request, 'dashboard.html', context)
+    else:
+        return render(request, 'dashboard.html', {'message': 'Superuser'})
